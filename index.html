@@ -5,6 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Minesweeper</title>
 <style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f0f0f0;
+  }
   table {
     border-collapse: collapse;
     margin: 20px auto;
@@ -14,18 +19,26 @@
     height: 30px;
     border: 1px solid #ccc;
     text-align: center;
+    vertical-align: middle;
     cursor: pointer;
-  }
-  .flag{
-    color: red;
     font-size: 20px;
+    background-color: #e0e0e0;
+  }
+  td.revealed {
+    background-color: #d0d0d0;
+  }
+  td.flag {
+    color: red;
+  }
+  td.mine {
+    background-color: red;
   }
 </style>
 </head>
 <body>
 
-<table id="myTable">
-</table>
+<h1>Minesweeper</h1>
+<table id="myTable"></table>
 
 <script src="minesweeper.js"></script>
 
