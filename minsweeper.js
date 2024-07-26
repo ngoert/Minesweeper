@@ -116,7 +116,9 @@ function countAdjacentMines(row, col) {
       for (let j = 0; j < numCols; j++) {
         if (mines[i][j]) {
             // Reveals a mine
-          table.rows[i].cells[j].textContent = '\u25A0'; // Black square
+            const cell = table.rows[i].cells[j];
+            cell.textContent = '\u25A0'; // Black square
+            cell.classList.add('mine');
         }
       }
     }
