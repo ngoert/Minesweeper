@@ -12,6 +12,7 @@ const table = document.getElementById('myTable');
      */
   let mines = Array.from({ length: numRows }, () => Array(numCols).fill(false));
   let flags = Array.from({ length: numRows }, () => Array(numCols).fill(false)); // Track flags
+  let revealed = Array.from({ length: numRows }, () => Array(numCols).fill(false));
 
   // Generate the 8x8 table
   for (let i = 0; i < numRows; i++) {
@@ -20,37 +21,41 @@ const table = document.getElementById('myTable');
     for (let j = 0; j < numCols; j++) {
         // Create singular cell (td)
       let cell = row.insertCell();
+      cell.classList.add('cell');
       // Click listener for each singular cell (td)
       cell.addEventListener('click', function() {
-        // if flag
-        if (flags[i][j]) return; // Do nothing if flagged
-        // if mine
-        if (mines[i][j]) {
-          // Game over, show mine
-          this.textContent = '\u25A0'; // Black square
-          alert('Game over! You clicked on a mine.');
-          revealAllMines();
-        } else {
-          // Print X if there is no mine
-          this.textContent = 'X';
-        }
-    });
-    
-    // Cell listener for right-click
-    cell.addEventListener('contextmenu', function(event) {
-        // Right-click
+        handleClick(i, j);
+      });
+      cell.addEventListener('contextmenu', function(event) {
         event.preventDefault();
-        // Check to see if there is anything there already
-        if (this.textContent === 'X') return; // Do nothing if already revealed
-        // Toggle Flags
-        flags[i][j] = !flags[i][j];
-        // Update, can check & uncheck if neccessary
-        this.textContent = flags[i][j] ? '\u2691': ''; // Flag
-        // Adds flag if true, removes flag if false
-        this.classList.toggle('flag', flags[i][j]);
-    });
+        handleContextMenu(i, j);
+      });
+    }
+  }
+    
+// Function to handle cell click
+function handleClick(row, col) {
+  if (flags[row][col] || revealed[row][col]) return; // Do nothing if flagged or already revealed
+  if (mines[row][col]) {
+      // Game over, show mine
+      revealAllMines();
+      alert('Game over! You clicked on a mine.');
+  } else {
+      revealCell(row, col);
+  }
 }
+
+// Function to handle right-click (context menu) for flagging
+function handleContextMenu(row, col) {
+  if (revealed[row][col]) return; // Do nothing if already revealed
+  flags[row][col] = !flags[row][col];
+  table.rows[row].cells[col].textContent = flags[row][col] ? '\u2691' : '';
+  table.rows[row].cells[col].classList.toggle('flag', flags[row][col]);
 }
+
+
+
+
   // Randomly place mines on grid
   let placedMines = 0;
   while (placedMines < numMines) {
@@ -65,6 +70,45 @@ const table = document.getElementById('myTable');
       placedMines++;
     }
   }
+
+// Function to reveal a cell and its adjacent cells if needed
+function revealCell(row, col) {
+  if (row < 0 || row >= numRows || col < 0 || col >= numCols || revealed[row][col] || flags[row][col]) return;
+
+  revealed[row][col] = true;
+  const cell = table.rows[row].cells[col];
+  let mineCount = countAdjacentMines(row, col);
+
+  cell.classList.add('revealed');
+  if (mineCount === 0) {
+      cell.textContent = '';
+      for (let r = row - 1; r <= row + 1; r++) {
+          for (let c = col - 1; c <= col + 1; c++) {
+              if (r !== row || c !== col) {
+                  revealCell(r, c);
+              }
+          }
+      }
+  } else {
+      cell.textContent = mineCount;
+  }
+}
+
+// Function to count the number of mines around a cell
+function countAdjacentMines(row, col) {
+  let count = 0;
+  for (let r = row - 1; r <= row + 1; r++) {
+      for (let c = col - 1; c <= col + 1; c++) {
+          if (r >= 0 && r < numRows && c >= 0 && c < numCols && mines[r][c]) {
+              count++;
+          }
+      }
+  }
+  return count;
+}
+
+
+
   // Function to reveal all mines when game over
   function revealAllMines() {
     // Go thorugh each singular square
