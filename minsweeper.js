@@ -64,9 +64,6 @@ function handleContextMenu(row, col) {
   // If the cell is flagged, set its text content to the flag symbol;
   // otherwise, set it to an empty string
   table.rows[row].cells[col].textContent = flags[row][col] ? '\u2691' : '';
-  // Toggle the 'flag' class on the cell based on the flag status
-  // This will allow for visual styling of flagged cells (e.g., red color)
-  table.rows[row].cells[col].classList.toggle('flag', flags[row][col]);
 }
 
   // Randomly place mines on grid
