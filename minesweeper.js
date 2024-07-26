@@ -5,7 +5,7 @@ const table = document.getElementById('myTable');
   const numMines = 10; // Number of mines to be randomly placed
 
   /* Create a 2D array to keep track of where mines are placed.
-     When a mine is placed, the square (`(mines[row][col])`) is true 
+     When a mine is placed, the cell (`(mines[row][col])`) is set to true 
      This creates a new array with `numRows`. For each row, `Array(numCols).fill(false)` 
      creates an array of `numCols` elements filled with `false`. This initializes a 2D grid (`mines`) where 
      each cell represents whether a mine is present (`true`) or not (`false`).
