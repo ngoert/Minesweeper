@@ -38,11 +38,9 @@ class Minesweeper {
           let cell = row.insertCell();
           cell.classList.add('cell');
           // Click listener for each singular cell (td)
-          cell.addEventListener('click', function() {
-            this.handleClick(i, j);
-          });
+          cell.addEventListener('click', () => this.handleClick(i, j));
           // Handle right-click
-          cell.addEventListener('contextmenu', function(event) {
+          cell.addEventListener('contextmenu', (event) => {
             // Prevent menu from popping up from right-click
             event.preventDefault();
             // Call function for whatever cell was clicked
