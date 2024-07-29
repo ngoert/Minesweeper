@@ -32,7 +32,7 @@ class Minesweeper {
       // Generate the 8x8 table
       for (let i = 0; i < this.numRows; i++) {
         // Create row
-        let row = table.insertRow();
+        let row = this.table.insertRow();
         for (let j = 0; j < this.numCols; j++) {
           // Create singular cell (td)
           let cell = row.insertCell();
@@ -171,4 +171,4 @@ class Minesweeper {
   // Initialize the game after the DOM content is loaded
   document.addEventListener('DOMContentLoaded', () => {
     const game = new Minesweeper('myTable', 8, 8, 10); // Create a new Minesweeper game instance
-    });
+  });
