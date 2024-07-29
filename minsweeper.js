@@ -39,7 +39,7 @@ class Minesweeper {
           cell.classList.add('cell');
           // Click listener for each singular cell (td)
           cell.addEventListener('click', function() {
-            handleClick(i, j);
+            this.handleClick(i, j);
           });
           // Handle right-click
           cell.addEventListener('contextmenu', function(event) {
