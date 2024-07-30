@@ -157,9 +157,9 @@ class Minesweeper {
         for (let j = 0; j < this.numCols; j++) {
           if (this.mines[i][j]) {
             // Reveals a mine
-            const cell = this.table.rows[i].cells[j];
+            const cell = this.table.rows[i].cells[j]; // Cell Element
             cell.textContent = '\u25A0'; // Black square
-            cell.classList.add('mine');
+            cell.classList.add('mine'); // Style
           }
         }
       }
